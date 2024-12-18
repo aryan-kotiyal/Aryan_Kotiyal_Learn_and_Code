@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class Country {
 
     public static void main(String[] args) {
         String countryCodesPath = "D:\\Aryan_Kotiyal_Learn_and_Code\\assignment1\\src\\main\\resources\\CountryCodes.json";
