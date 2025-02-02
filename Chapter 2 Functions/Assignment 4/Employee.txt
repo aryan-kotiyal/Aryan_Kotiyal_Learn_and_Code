@@ -1,0 +1,27 @@
+Class
+Employee
+{
+    int
+id;
+string
+name;
+string
+department;
+bool: working
+
+public:
+saveEmployeeTODatabase()
+printEmployeeDetailReportXML()
+printEmployeeDetailReportCSV()
+terminateEmployee()
+bool
+isWorking()
+}; 
+
+This class is violating the SRP principle as it is doing multiple things.
+This class has multiple reasons to change.
+To make this class follow SOLID Principles, class should be broken into smaller classes.
+saveEmployeeTODatabase() method should be used in a separate class that handles the database operations
+printEmployeeDetailReportXML() & printEmployeeDetailReportCSV() methods should be used in a separate class that handle the report printing.
+terminateEmployee() & isWorking() method should be used in a separate class which handles the business logic.
+

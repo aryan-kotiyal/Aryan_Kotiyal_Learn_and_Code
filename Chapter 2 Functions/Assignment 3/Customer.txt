@@ -1,0 +1,136 @@
+public
+
+class CustomerSearch
+    {
+
+    // Search
+    customer
+    by
+    Country
+    public
+    List < Customer > SearchByCountry(string
+    country)
+    {
+
+        var
+    query =
+    from c in db.customers
+    where
+    c.Country.Contains(country)
+    orderby
+    c.CustomerID
+    ascending
+    select
+    c;
+
+
+return query.ToList();
+
+}
+
+// Search
+customer
+by
+companyname
+public
+List < Customer > SearchByCompanyName(string
+company)
+{
+
+var
+query =
+from c in db.customers
+where
+c.Country.Contains(company)
+orderby
+c.CustomerID
+ascending
+select
+c;
+
+return query.ToList();
+
+}
+
+// Search
+customer
+by
+contact
+person
+public
+List < Customer > SearchByContact(string
+contact)
+{
+
+var
+query =
+from c in db.customers
+where
+c.Country.Contains(contact)
+orderby
+c.CustomerID
+ascending
+select
+c;
+
+return query.ToList();
+
+}
+
+public
+string
+ExportToCSV(List < Customer > data)
+{
+
+StringBuilder
+sb = new
+StringBuilder();
+
+foreach(var
+item in data)
+{
+    sb.AppendFormat("{0},{1}, {2}, {3}", item.CustomerID, item.CompanyName, item.ContactName, item.Country);
+sb.AppendLine();
+}
+
+return sb.ToString();
+
+}
+
+} 
+
+
+-------------------------------------------------
+
+This code should have a separate class "CustomerSearchService" to handle the searching services based on different criteria of customer data.
+This class will contain the methods used for searching.
+
+class CustomerSearchService {
+
+    public List<Customer> searchByCountry(String country) {
+    }
+
+    public List<Customer> searchByCompanyName(String companyName) {
+    }
+
+    public List<Customer> searchByContact(String contactName) {
+    }
+}
+
+The code should also have a different class for the "Customer Data Export" related things so that the SRP principle is maintained.
+
+class CustomerFileExporter {
+    public String exportToCsv(List<Customer> customerData) {
+        StringBuilder csv = new StringBuilder();
+        for (Customer customer : customerData) {
+            csv.append(String.format("%s,%s,%s,%s%n",
+                    customer.getCustomerID(),
+                    customer.getCompanyName(),
+                    customer.getContactName(),
+                    customer.getCountry()));
+        }
+        return csv.toString();
+    }
+
+
+CustomerSearchService is for searching & CustomerFieExporter is for exporting.
