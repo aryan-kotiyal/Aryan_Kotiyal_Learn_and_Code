@@ -22,6 +22,7 @@ class TumblrAPIClient {
             }
             scanner.close();
 
+            //we replace "var tumblr_api_read = " with blank space to remove the error while parsing JSON response
             String jsonResponse = response.toString().replace("var tumblr_api_read = ", "").trim();
             return new JSONObject(jsonResponse);
         } catch (Exception e) {

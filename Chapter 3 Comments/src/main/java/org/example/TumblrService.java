@@ -3,10 +3,12 @@ package org.example;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import static org.example.constants.Messages.NO_DATA_AVAILABLE;
+
 class TumblrService {
     public void displayBlogInfo(JSONObject blogData) {
         if (blogData == null) {
-            System.out.println("No data available.");
+            System.out.println(NO_DATA_AVAILABLE);
             return;
         }
 
@@ -21,7 +23,7 @@ class TumblrService {
 
     public void displayImageLinks(JSONObject blogData, int start) {
         if (blogData == null) {
-            System.out.println("No data available.");
+            System.out.println(NO_DATA_AVAILABLE);
             return;
         }
 
