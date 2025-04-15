@@ -1,0 +1,21 @@
+class Employee {
+  string name;
+  int age;
+  float salary;
+
+public:
+  string getName();
+  void setName(string name);
+  int getAge();
+  void setAge(int age);
+  float getSalary();
+  void setSalary(float salary);
+};
+
+Employee employee;
+
+Is 'employee' an object or a data structure? Why?
+
+Here in this code sample 'employee' is a object as the Employee class has private fields
+and the only way to access those fields is the getters and setters that the class has
+provided.
