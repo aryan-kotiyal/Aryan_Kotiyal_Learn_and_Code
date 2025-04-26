@@ -3,6 +3,7 @@ package com.example.rest_api.service;
 import com.example.rest_api.constants.Messages;
 import com.example.rest_api.exception.EmployeeNotFoundException;
 import com.example.rest_api.model.Employee;
+import com.example.rest_api.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -12,14 +13,18 @@ import java.util.Map;
 @Service
 public class EmployeeService {
 
-    private final Map<String, Employee> employeeMap = new HashMap<>();
+    private final EmployeeRepository employeeRepository;
+
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
     public Collection<Employee> getAllEmployees() {
-        return employeeMap.values();
+        return employeeRepository.findAll();
     }
 
     public Employee getEmployeeById(String employeeId) {
-        Employee employee = employeeMap.get(employeeId);
+        Employee employee = employeeRepository.findById(employeeId);
         if (employee == null) {
             throw new EmployeeNotFoundException(String.format(Messages.EMPLOYEE_NOT_FOUND, employeeId));
         }
@@ -27,23 +32,23 @@ public class EmployeeService {
     }
 
     public String createEmployee(Employee employee) {
-        employeeMap.put(employee.getEmployeeId(), employee);
+        employeeRepository.save(employee);
         return Messages.EMPLOYEE_CREATED;
     }
 
     public String updateEmployee(Employee employee) {
-        if (!employeeMap.containsKey(employee.getEmployeeId())) {
+        if (!employeeRepository.existsById(employee.getEmployeeId())) {
             throw new EmployeeNotFoundException(String.format(Messages.EMPLOYEE_NOT_FOUND_FOR_UPDATE, employee.getEmployeeId()));
         }
-        employeeMap.put(employee.getEmployeeId(), employee);
+        employeeRepository.save(employee);
         return Messages.EMPLOYEE_UPDATED;
     }
 
     public String deleteEmployee(String employeeId) {
-        if (!employeeMap.containsKey(employeeId)) {
+        if (!employeeRepository.existsById(employeeId)) {
             throw new EmployeeNotFoundException(String.format(Messages.EMPLOYEE_NOT_FOUND_FOR_DELETE, employeeId));
         }
-        employeeMap.remove(employeeId);
+        employeeRepository.deleteById(employeeId);
         return Messages.EMPLOYEE_DELETED;
     }
 
