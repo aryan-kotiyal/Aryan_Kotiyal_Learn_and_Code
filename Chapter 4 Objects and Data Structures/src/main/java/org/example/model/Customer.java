@@ -22,7 +22,7 @@ public class Customer {
 
     public boolean pay(float amount) {
         if (myWallet.hasEnoughMoney(amount)) {
-            myWallet.subtractMoney(amount);
+            myWallet.debitMoney(amount);
             return true;
         }
         return false;

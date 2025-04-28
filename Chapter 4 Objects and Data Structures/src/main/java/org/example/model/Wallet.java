@@ -12,11 +12,11 @@ public class Wallet {
         return value;
     }
 
-    public void addMoney(float deposit) {
+    public void creditMoney(float deposit) {
         value += deposit;
     }
 
-    public void subtractMoney(float debit) {
+    public void debitMoney(float debit) {
         value -= debit;
     }
 
