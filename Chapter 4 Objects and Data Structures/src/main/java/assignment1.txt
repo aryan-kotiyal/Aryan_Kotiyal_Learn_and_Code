@@ -1,0 +1,21 @@
+class Employee {
+  string name;
+  int age;
+  float salary;
+
+public:
+  string getName();
+  void setName(string name);
+  int getAge();
+  void setAge(int age);
+  float getSalary();
+  void setSalary(float salary);
+};
+
+Employee employee;
+
+Is 'employee' an object or a data structure? Why?
+
+Here in this code sample 'employee' acts as a data structure as it just holds the data
+and no meaningful behavior. If along with data it had some business logic methods defined,
+then we could call it an object.
