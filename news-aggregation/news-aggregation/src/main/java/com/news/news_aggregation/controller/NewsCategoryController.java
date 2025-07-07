@@ -1,10 +1,10 @@
 package com.news.news_aggregation.controller;
 
 import com.news.news_aggregation.model.NewsCategory;
+import com.news.news_aggregation.repository.NewsCategoryRepository;
 import com.news.news_aggregation.service.NewsCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +15,8 @@ import java.util.List;
 public class NewsCategoryController {
 
     private final NewsCategoryService categoryService;
+    private final NewsCategoryRepository categoryRepo;
 
-//    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<String> add(@RequestParam String name) {
         categoryService.addCategory(name);
@@ -26,5 +26,10 @@ public class NewsCategoryController {
     @GetMapping("/all")
     public List<NewsCategory> all() {
         return categoryService.getAll();
+    }
+
+    @GetMapping("/visible")
+    public List<NewsCategory> getVisibleCategories() {
+        return categoryRepo.findByIsVisibleTrue();
     }
 }

@@ -3,6 +3,7 @@ package com.news.news_aggregation.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -10,16 +11,17 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+
 public class Notification {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @ElementCollection
-    private List<String> keywords;
+    @ManyToOne
+    private NewsArticle article;
 
-    @ElementCollection
-    private List<String> categories;
+    private LocalDateTime createdAt;
 }

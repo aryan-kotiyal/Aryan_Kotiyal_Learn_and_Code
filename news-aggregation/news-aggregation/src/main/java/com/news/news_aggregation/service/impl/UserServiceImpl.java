@@ -5,14 +5,12 @@ import com.news.news_aggregation.model.*;
 import com.news.news_aggregation.repository.UserRepository;
 import com.news.news_aggregation.service.UserService;
 import lombok.RequiredArgsConstructor;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
-//    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public UserResponse signup(UserSignupRequest request) {
@@ -23,7 +21,6 @@ public class UserServiceImpl implements UserService{
         User user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
-//                .password(passwordEncoder.encode(request.getPassword()))
                 .password(request.getPassword())
                 .role(Role.USER)
                 .build();
@@ -43,7 +40,6 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Invalid credentials"));
 
-//        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
         if (!request.getPassword().equals(user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }

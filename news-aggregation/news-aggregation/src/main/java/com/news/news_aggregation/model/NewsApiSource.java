@@ -3,11 +3,14 @@ package com.news.news_aggregation.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+
 public class NewsApiSource {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,5 +19,9 @@ public class NewsApiSource {
     private String name;
     private String url;
     private String apiKey;
+
     private boolean active;
+
+    @Column(name = "last_accessed_at")
+    private LocalDateTime lastAccessedAt;
 }

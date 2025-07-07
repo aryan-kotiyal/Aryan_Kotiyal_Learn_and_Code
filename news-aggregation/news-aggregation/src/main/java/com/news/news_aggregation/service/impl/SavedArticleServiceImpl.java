@@ -1,12 +1,15 @@
 package com.news.news_aggregation.service.impl;
 
+import com.news.news_aggregation.dto.SavedArticleResponse;
 import com.news.news_aggregation.model.NewsArticle;
+import com.news.news_aggregation.model.NewsCategory;
 import com.news.news_aggregation.model.SavedArticle;
 import com.news.news_aggregation.model.User;
 import com.news.news_aggregation.repository.NewsArticleRepository;
 import com.news.news_aggregation.repository.SavedArticleRepository;
 import com.news.news_aggregation.repository.UserRepository;
 import com.news.news_aggregation.service.SavedArticleService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +43,7 @@ public class SavedArticleServiceImpl implements SavedArticleService {
     }
 
     @Override
+    @Transactional
     public void deleteSavedArticle(Long userId, Long articleId) {
         SavedArticle saved = savedRepo.findByUserIdAndArticleId(userId, articleId)
                 .orElseThrow(() -> new RuntimeException("Not found"));
@@ -47,10 +51,24 @@ public class SavedArticleServiceImpl implements SavedArticleService {
     }
 
     @Override
-    public List<NewsArticle> getSavedArticles(Long userId) {
+    public List<SavedArticleResponse> getSavedArticles(Long userId) {
         User user = userRepo.findById(userId).orElseThrow();
         return savedRepo.findByUser(user).stream()
-                .map(SavedArticle::getArticle)
-                .collect(Collectors.toList());
+                .map(sa -> {
+                    NewsArticle a = sa.getArticle();
+                    String categoryNames = a.getCategories().stream()
+                            .map(NewsCategory::getName)
+                            .collect(Collectors.joining(", "));
+
+                    return SavedArticleResponse.builder()
+                            .id(a.getId())
+                            .title(a.getTitle())
+                            .content(a.getContent())
+                            .url(a.getUrl())
+                            .category(categoryNames)
+                            .source(a.getSource())
+                            .build();
+                })
+                .toList();
     }
 }

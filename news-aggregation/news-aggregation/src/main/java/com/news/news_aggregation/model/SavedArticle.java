@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Table(name = "saved_articles")
-public class SavedArticle {
 
+public class SavedArticle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

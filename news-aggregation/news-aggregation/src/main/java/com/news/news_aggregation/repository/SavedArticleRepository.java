@@ -9,5 +9,7 @@ import java.util.Optional;
 
 public interface SavedArticleRepository extends JpaRepository<SavedArticle, Long> {
     List<SavedArticle> findByUser(User user);
+    List<SavedArticle> findByUserId(Long userId);
+    void deleteByUserIdAndArticleId(Long userId, Long articleId);
     Optional<SavedArticle> findByUserIdAndArticleId(Long userId, Long articleId);
 }
